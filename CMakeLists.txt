@@ -5,7 +5,7 @@ FIND_PACKAGE(OpenCV REQUIRED)
 
 PROJECT(Projet)
 
-set(SOURCE_FILES test_ide.cpp coincoin.cpp)
-add_executable(test_ide ${SOURCE_FILES})
+set(SOURCE_FILES main.cpp)
+add_executable(main ${SOURCE_FILES})
 
 INCLUDE_DIRECTORIES(${OpenCV_INCLUDE_DIRS})
