@@ -1,7 +1,6 @@
 //
 // Created by raph on 08/11/17.
 //
-
 #include <iostream>
 
 int main() {
