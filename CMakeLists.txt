@@ -2,9 +2,13 @@ CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
 
 SET(OpenCV_STATIC OFF)
 FIND_PACKAGE(OpenCV REQUIRED)
-INCLUDE_DIRECTORIES(${OpenCV_INCLUDE_DIRS})
 
-PROJECT(TP4)
+set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR})
+find_package(Eigen3 REQUIRED)
+include_directories(${EIGEN3_INCLUDE_DIR})
 
-ADD_EXECUTABLE(GC graphCuts.cpp maxflow/graph.cpp videoFindBall.cpp)
+PROJECT(HawkEyeProject)
+
+
+ADD_EXECUTABLE(GC graphCuts.cpp maxflow/graph.cpp main.cpp)
 TARGET_LINK_LIBRARIES(GC ${OpenCV_LIBS})
