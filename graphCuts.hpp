@@ -14,7 +14,8 @@ float g(float x);
 float lambda(const Point& p,const Point& q, Mat& G);
 bool is_white(Mat& M,int i,int j);
 
-void findBall(Mat& input, Mat& output);
-void position(Mat ball);
+bool findBall(Mat& input, Mat& output);
+Point2i find_position(Mat& ball);
+Point2i find_position_gaussian_blur(Mat& ball) ;
 
 #endif // GRAPHCUTS_HPP_INCLUDED

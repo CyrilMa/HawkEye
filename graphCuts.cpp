@@ -1,6 +1,8 @@
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
 #include <iostream>
+#include <math.h>
+
 
 #include "maxflow/graph.h"
 #include "graphCuts.hpp"
@@ -13,7 +15,7 @@ using namespace cv;
 float Dp(const Point& p, int i,  Mat& I){
     Vec3b color = I.at<Vec3b>(p);
     Vec3b color_src_sink[] = {Vec3b(81,115,199), Vec3b(134,220,255)};
-    if(i==1) return 5*norm(color, color_src_sink[i], CV_L2);
+    if(i==1) return 2.8*norm(color, color_src_sink[i], CV_L2);
     if(i==0) return norm(color, color_src_sink[i], CV_L2);
 }
 
@@ -29,7 +31,7 @@ bool is_white(Mat& M,int i,int j) {
     return(M.at<uchar>(i,j)==255);
 }
 
-void findBall(Mat& input, Mat& output) {
+bool findBall(Mat& input, Mat& output) {
 
 
     Mat F;
@@ -78,22 +80,25 @@ void findBall(Mat& input, Mat& output) {
 	int flow = g.maxflow();
     output = F.clone();
     int color[] = {255,0};
+    bool found = false;
     for (int i=0;i<m;i++) {
         for (int j=0;j<n;j++){
-            output.at<uchar>(i,j) = color[g.what_segment(i*n+j)];
+            int c = g.what_segment(i*n+j);
+            if(!c) found=true;
+            output.at<uchar>(i,j) = color[c];
         }
     }
-	return;
+	return(found);
 }
 
-Point2i position(Mat& ball) {
+Point2i find_position(Mat& ball) {
     list<Point2i> white_pixels;
     int m=ball.rows; int n=ball.cols;
 
     for(int i=0;i<m;i++) {
         for(int j=0;j<n; j++)
             if(is_white(ball,i,j) && is_white(ball,i-1,j) && is_white(ball,i+1,j) && is_white(ball,i,j-1) && is_white(ball,i,j+1))
-                white_pixels.push_front(Point2i(i,j));
+                white_pixels.push_front(Point2i(j,i));
     }
 
     int n_pixels = white_pixels.size();
@@ -104,7 +109,23 @@ Point2i position(Mat& ball) {
         avg = avg + p;
         white_pixels.pop_back();
     }
+    avg = Point2i((int) ((float) avg.x/n_pixels),(int) ((float) avg.y/n_pixels));
 
-    avg = avg/n_pixels;
     return(avg);
+}
+
+Point2i find_position_gaussian_blur(Mat& ball) {
+    int m=ball.rows; int n=ball.cols;
+    GaussianBlur(ball, ball,  Size(5,5), 0, 0, BORDER_DEFAULT);
+
+    int bi; int bj; double max = 0;
+    for(int i=0;i<m;i++) {
+        for(int j=0;j<n; j++)
+            if(ball.at<uchar>(i,j)>max) {
+                max = ball.at<uchar>(i,j); bi = i; bj = j;
+            }
+    }
+    if(max>150)
+        return(Point2i(bj,bi));
+    else return(Point2i(0,0));
 }
