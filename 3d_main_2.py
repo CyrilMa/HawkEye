@@ -112,6 +112,7 @@ for i in range(3):
     projected_point1[i] /= projected_point1[2]
     projected_point2[i] /= projected_point2[2]
 
+
 print(projected_point1)
 print(projected_point2)
 

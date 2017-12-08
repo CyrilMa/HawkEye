@@ -2,7 +2,7 @@ import cv2
 import numpy as np
 import lines_3d
 
-source_filename = "test_files_3/foo-1704.jpeg"
+source_filename = "test_files/foo-1704.jpeg"
 
 # size of image
 y1 = 0
@@ -110,7 +110,7 @@ for key in coordinates_3d.keys():
         coordinates[i] = coordinates[i]/float(coordinates[3])
 
     print(key)
-    print("expected coordinates (approx):")
+    print("expected coordinates:")
     print(coordinates_3d[key])
     print("triangulation coordinates")
     print(coordinates)

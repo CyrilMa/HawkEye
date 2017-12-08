@@ -197,6 +197,9 @@ def get_corners(img, show_process=False):
         for x1, y1, x2, y2 in middle_line:
             cv2.line(temp_img, (x1, y1), (x2, y2), (0, 0, 255), 2)
 
+        for x1, y1, x2, y2 in fond_line:
+            cv2.line(temp_img, (x1, y1), (x2, y2), (0, 0, 255), 2)
+
         if show_process:
             cv2.imshow('houghlines', temp_img)
             cv2.waitKey()

@@ -1,5 +1,5 @@
 In order to run this project, you should first download the ressources folder here: 
-link
+https://drive.google.com/file/d/1tEMC6g1mPUjY939HAXLJBl0ePkaGETjo/view?usp=sharing
 
 You can put the folder anywhere, just make sure you change the paths to the folder in the config.py file and the paths in the main.cpp file.
 
