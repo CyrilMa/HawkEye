@@ -101,10 +101,6 @@ for key in coordinates_3d.keys():
     # left_point = cv2.undistortPoints(left_point, cm1, dc1)
     # right_point = cv2.undistortPoints(right_point, cm2, dc2)
 
-    # avec le undistort ca fait nimp...
-    # et sans:
-    #
-
     coordinates = cv2.triangulatePoints(p1, p2, left_point, right_point)
 
     coordinates = np.reshape(coordinates, 4)
